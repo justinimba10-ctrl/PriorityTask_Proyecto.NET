@@ -15,9 +15,27 @@ namespace PriorityTask.Modelos
         [Column("id_materia")]
         public int idMateria { get; set; }
 
+        [ForeignKey("usuario")]
         [Column("id_usuario")]
+        [Required]
+        public int idUsuario { get; set; }
+
+        [Column("nombre")]
         [MaxLength(100)]
         [Required]
         public string nombre { get; set; }
+
+        [Column("codigo_color")]
+        [MaxLength(7)]
+        [Required]
+        public string codigoColor { get; set; }
+
+        [Column("docente")]
+        [MaxLength(100)]
+        [Required]
+        public string docente { get; set; }
+
+        //Objetos de navegacion
+        public Usuario? usuario { get; set; }
     }
 }
