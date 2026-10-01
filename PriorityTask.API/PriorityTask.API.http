@@ -1,0 +1,6 @@
+@PriorityTask.API_HostAddress = http://localhost:5152
+
+GET {{PriorityTask.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

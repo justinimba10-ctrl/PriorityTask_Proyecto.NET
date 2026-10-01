@@ -39,6 +39,9 @@ namespace PriorityTask.Modelos
         [Required]
         public DateTime fechaRegistro { get; set; } = DateTime.Now;
 
+        //Relaciones
+        public List<Materia> materias { get; set; } = new List<Materia>();
+
 
 
 

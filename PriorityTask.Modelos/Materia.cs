@@ -37,5 +37,9 @@ namespace PriorityTask.Modelos
 
         //Objetos de navegacion
         public Usuario? usuario { get; set; }
+
+        //Relaciones
+        public List<Tarea> tareas { get; set; } = new List<Tarea>();
+        public List<Nota> notas { get; set; } = new List<Nota>();
     }
 }

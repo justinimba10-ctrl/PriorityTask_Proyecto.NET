@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="PriorityTask.API/PriorityTask.API.csproj" Id="7458f899-0a05-4b42-84cd-6e15b1ccdf07" />
   <Project Path="PriorityTask.Modelos/PriorityTask.Modelos.csproj" />
 </Solution>

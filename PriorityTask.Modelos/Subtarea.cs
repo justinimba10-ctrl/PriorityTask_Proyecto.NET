@@ -12,14 +12,14 @@ namespace PriorityTask.Modelos
     public class Subtarea
     {
         [Key]
-        [Column("subtareas")]
+        [Column("id_Subtareas")]
         [Required]
-        public int subtarea { get; set; }
+        public int idSubtarea { get; set; }
 
         [ForeignKey("tarea")]
         [Column("id_tarea")]
         [Required]
-        public string id_tarea { get; set; }
+        public int id_tarea { get; set; }
 
         [Column("descripcion")]
         [MaxLength(200)]
@@ -32,5 +32,8 @@ namespace PriorityTask.Modelos
 
         //objetos de navegacion
         public Tarea? tarea { get; set; }
+
+        //
+
     }
 }

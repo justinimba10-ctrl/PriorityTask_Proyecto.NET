@@ -17,7 +17,7 @@ namespace PriorityTask.Modelos
 
         [ForeignKey("materia")]
         [Column("id_materia")]
-        [[Required]
+        [Required]
         public int idMateria { get; set; }
 
         [Column("titulo")]
@@ -38,9 +38,9 @@ namespace PriorityTask.Modelos
         [Required]
         public int prioridad { get; set; }
 
-        [Column("esatdo")]
+        [Column("estado")]
         [Required]
-        public bool estado { get; set; }
+        public string estado { get; set; } = "Pendiente";
 
         [Column("fecha_creacion")]
         [Required]
@@ -48,5 +48,8 @@ namespace PriorityTask.Modelos
 
         //Objeots de navegacion
         public Materia? materia { get; set; }
+
+        //Relaciones
+        public List<Subtarea> subtareas { get; set; } = new List<Subtarea>();
     }
 }
