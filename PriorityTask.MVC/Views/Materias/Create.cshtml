@@ -1,6 +1,10 @@
 @model PriorityTask.Modelos.Materia
-@{ ViewData["Title"] = "Crear Materia"; }
+@{
+    ViewData["Title"] = "Crear Materia";
+}
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 <style>
     body { background-color: #0f172a !important; color: #f8fafc; }
     .dark-card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
@@ -10,31 +14,56 @@
     .btn-neon:hover { background-color: #16a34a; color: #fff; }
     .form-control-dark { background-color: #0f172a; border: 1px solid #334155; color: #f8fafc; }
     .form-control-dark:focus { background-color: #0f172a; border-color: #22c55e; color: #fff; box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+    .alert-danger-custom { background-color: #451a1a; border: 1px solid #ef4444; color: #fca5a5; border-radius: 8px; }
 </style>
 
 <div class="container py-4">
     <div class="mb-4 p-4 header-neon shadow-sm d-flex justify-content-between align-items-center">
         <div>
-            <h3 class="fw-bold mb-1 text-white"><i class="bi bi-book text-neon me-2"></i>Nueva Materia</h3>
-            <p class="text-muted mb-0 small">Registra una asignatura académica</p>
+            <h3 class="fw-bold mb-1 text-white"><i class="bi bi-journal-plus text-neon me-2"></i>Nueva Materia</h3>
+            <p class="text-muted mb-0 small">Ingresa el nombre de la materia, docente y su color representativo</p>
         </div>
         <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-3"><i class="bi bi-arrow-left me-1"></i> Volver</a>
     </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card dark-card p-4 shadow-lg">
-                <form asp-action="Create">
-                    <div class="mb-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger-custom p-3 mb-4" role="alert"></div>
+
+                    <input type="hidden" asp-for="idUsuario" value="1" />
+
+                    <div class="mb-3">
                         <label class="form-label text-neon fw-bold">Nombre de la Materia</label>
-                        <input asp-for="nombre" class="form-control form-control-dark" placeholder="Ej. Programación Orientada a Objetos" />
+                        <input asp-for="nombre" class="form-control form-control-dark" placeholder="Ej. Programación Orientada a Objetos" required />
                         <span asp-validation-for="nombre" class="text-danger small"></span>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-neon fw-bold">Nombre del Docente</label>
+                        <input asp-for="docente" class="form-control form-control-dark" placeholder="Ej. Ing. Brais Moure" />
+                        <span asp-validation-for="docente" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label text-neon fw-bold">Color Personalizado de la Materia</label>
+                        <div class="d-flex align-items-center gap-3">
+                            <input type="color" asp-for="codigoColor" class="form-control form-control-color bg-dark border-secondary p-1" value="#22c55e" style="width: 60px; height: 40px; cursor: pointer;" />
+                            <span class="text-muted small">Elige el color para identificar el borde y los detalles de esta materia.</span>
+                        </div>
+                    </div>
+
                     <div class="d-flex justify-content-end gap-2">
                         <a asp-action="Index" class="btn btn-outline-light rounded-pill px-4">Cancelar</a>
-                        <button type="submit" class="btn btn-neon rounded-pill px-4"><i class="bi bi-save me-1"></i> Guardar</button>
+                        <button type="submit" class="btn btn-neon rounded-pill px-4"><i class="bi bi-save me-1"></i> Guardar Materia</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,78 +1,78 @@
 @model PriorityTask.Modelos.Tarea
+@{ ViewData["Title"] = "Crear Tarea"; }
 
-@{
-    ViewData["Title"] = "Create";
-}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<h1>Create</h1>
+<style>
+    body { background-color: #0f172a !important; color: #f8fafc; }
+    .dark-card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
+    .header-neon { background-color: #1e293b; border-left: 5px solid #22c55e; border-radius: 8px; }
+    .text-neon { color: #22c55e !important; }
+    .btn-neon { background-color: #22c55e; color: #0f172a; font-weight: 600; border: none; }
+    .btn-neon:hover { background-color: #16a34a; color: #fff; }
+    .form-control-dark, .form-select-dark { background-color: #0f172a; border: 1px solid #334155; color: #f8fafc; }
+    .form-control-dark:focus, .form-select-dark:focus { background-color: #0f172a; border-color: #22c55e; color: #fff; box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+</style>
 
-<h4>Tarea</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="idMateria" class="control-label"></label>
-                <input asp-for="idMateria" class="form-control" />
-                <span asp-validation-for="idMateria" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="titulo" class="control-label"></label>
-                <input asp-for="titulo" class="form-control" />
-                <span asp-validation-for="titulo" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="descripcion" class="control-label"></label>
-                <input asp-for="descripcion" class="form-control" />
-                <span asp-validation-for="descripcion" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="fechaLimite" class="control-label"></label>
-                <input asp-for="fechaLimite" class="form-control" />
-                <span asp-validation-for="fechaLimite" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="prioridad" class="control-label"></label>
-                <input asp-for="prioridad" class="form-control" />
-                <span asp-validation-for="prioridad" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="estado" class="control-label"></label>
-                <input asp-for="estado" class="form-control" />
-                <span asp-validation-for="estado" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="fechaCreacion" class="control-label"></label>
-                <input asp-for="fechaCreacion" class="form-control" />
-                <span asp-validation-for="fechaCreacion" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="materia" class="control-label"></label>
-                <input asp-for="materia" class="form-control" />
-                <span asp-validation-for="materia" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="subtareas" class="control-label"></label>
-                <input asp-for="subtareas" class="form-control" />
-                <span asp-validation-for="subtareas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container py-4">
+    <div class="mb-4 p-4 header-neon shadow-sm d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="fw-bold mb-1 text-white"><i class="bi bi-plus-circle text-neon me-2"></i>Nueva Tarea</h3>
+            <p class="text-muted mb-0 small">Registra una tarea seleccionando la materia y docente asociado</p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-3"><i class="bi bi-arrow-left me-1"></i> Volver</a>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card dark-card p-4 shadow-lg">
+                <form asp-action="Create">
+                    <input type="hidden" asp-for="fechaCreacion" />
+
+                    <div class="mb-3">
+                        <label class="form-label text-neon fw-bold">Materia / Docente</label>
+                        <select asp-for="idMateria" class="form-select form-select-dark" asp-items="ViewBag.Materias">
+                            <option value="">-- Seleccione Materia --</option>
+                        </select>
+                        <span asp-validation-for="idMateria" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-neon fw-bold">Título de la Tarea</label>
+                        <input asp-for="titulo" class="form-control form-control-dark" placeholder="Ej. Taller de Programación" />
+                        <span asp-validation-for="titulo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-neon fw-bold">Descripción</label>
+                        <textarea asp-for="descripcion" class="form-control form-control-dark" rows="3" placeholder="Detalles de la tarea..."></textarea>
+                        <span asp-validation-for="descripcion" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label text-neon fw-bold">Prioridad</label>
+                            <select asp-for="prioridad" class="form-select form-select-dark" asp-items="ViewBag.Prioridades">
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-neon fw-bold">Estado</label>
+                            <select asp-for="estado" class="form-select form-select-dark" asp-items="ViewBag.Estados">
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-neon fw-bold">Fecha Límite</label>
+                            <input asp-for="fechaLimite" type="datetime-local" class="form-control form-control-dark" />
+                            <span asp-validation-for="fechaLimite" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a asp-action="Index" class="btn btn-outline-light rounded-pill px-4">Cancelar</a>
+                        <button type="submit" class="btn btn-neon rounded-pill px-4"><i class="bi bi-save me-1"></i> Guardar Tarea</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

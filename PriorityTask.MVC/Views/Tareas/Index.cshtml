@@ -1,7 +1,8 @@
 @model IEnumerable<PriorityTask.Modelos.Tarea>
-
 @{
     ViewData["Title"] = "Gestión de Tareas";
+    var materias = ViewBag.DiccionarioMaterias as Dictionary<int, string>;
+    var docentes = ViewBag.DiccionarioDocentes as Dictionary<int, string>;
 }
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -13,24 +14,20 @@
     .header-neon { background-color: #1e293b; border-left: 5px solid #22c55e; border-radius: 8px; }
     .text-neon { color: #22c55e !important; }
     .btn-neon { background-color: #22c55e; color: #0f172a; font-weight: 600; border: none; }
-    .btn-neon:hover { background-color: #16a34a; color: #ffffff; }
-    .icon-box-neon { width: 48px; height: 48px; background-color: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .btn-neon:hover { background-color: #16a34a; color: #fff; }
 </style>
 
-<div class="container py-4" translate="no">
+<div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4 p-4 header-neon shadow-sm">
         <div>
-            <h3 class="fw-bold mb-1 d-flex align-items-center gap-2 text-white">
-                <i class="bi bi-list-check text-neon"></i>
-                Gestión de Tareas
+            <h3 class="fw-bold mb-1 text-white">
+                <i class="bi bi-list-check text-neon me-2"></i>Gestión de Tareas
             </h3>
-            <p class="text-muted mb-0 small">Administra tus tareas prioritarias</p>
+            <p class="text-muted mb-0 small">Administra tus tareas por materia, docente y prioridad</p>
         </div>
-        <div>
-            <a asp-action="Create" class="btn btn-neon rounded-pill px-4 shadow-sm">
-                <i class="bi bi-plus-lg me-1"></i> + Nueva Tarea
-            </a>
-        </div>
+        <a asp-action="Create" class="btn btn-neon rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> + Nueva Tarea
+        </a>
     </div>
 
     <div class="row g-4">
@@ -38,26 +35,35 @@
         {
             @foreach (var item in Model)
             {
+                var materiaNom = materias != null && materias.ContainsKey(item.idMateria) ? materias[item.idMateria] : "Sin Materia";
+                var docenteNom = docentes != null && docentes.ContainsKey(item.idMateria) ? docentes[item.idMateria] : "Sin Docente";
+                
+                string textoPrioridad = item.prioridad switch { 1 => "1 - Alta", 2 => "2 - Media", 3 => "3 - Baja", _ => "Media" };
+
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card dark-card h-100">
-                        <div class="card-header border-bottom border-slate-700 bg-transparent py-3 d-flex align-items-center justify-content-between">
-                            <span class="badge bg-slate-800 text-neon border border-emerald-500 rounded-pill px-3 py-1">
+                        <div class="card-header border-bottom border-secondary bg-transparent py-3 d-flex align-items-center justify-content-between">
+                            <span class="badge bg-dark text-neon border border-emerald-500 rounded-pill px-3 py-1">
                                 ID: #@item.idTarea
                             </span>
-                            <i class="bi bi-card-heading text-neon fs-5"></i>
+                            <span class="badge @(item.estado == "Completada" ? "bg-success" : (item.estado == "En Progreso" ? "bg-info text-dark" : "bg-warning text-dark")) rounded-pill px-3 py-1">
+                                @item.estado
+                            </span>
                         </div>
 
                         <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="icon-box-neon me-3">
-                                    <i class="bi bi-task"></i>
+                            <h5 class="card-title fw-bold text-white mb-2">@item.titulo</h5>
+                            
+                            <p class="text-muted small mb-3">@item.descripcion</p>
+
+                            <div class="p-3 bg-dark rounded border border-slate-700 mb-3">
+                                <div class="small mb-1"><i class="bi bi-book text-neon me-2"></i><strong>Materia:</strong> @materiaNom</div>
+                                <div class="small mb-1"><i class="bi bi-person-badge text-neon me-2"></i><strong>Docente:</strong> @docenteNom</div>
+                                <div class="small mb-1"><i class="bi bi-exclamation-triangle text-neon me-2"></i><strong>Prioridad:</strong> 
+                                    <span class="badge bg-secondary">@textoPrioridad</span>
                                 </div>
-                                <div>
-                                    <h5 class="card-title fw-bold text-white mb-0">@item.titulo</h5>
-                                    <small class="text-neon">Prioridad Registrada</small>
-                                </div>
+                                <div class="small"><i class="bi bi-calendar-event text-neon me-2"></i><strong>Límite:</strong> @item.fechaLimite.ToString("dd/MM/yyyy HH:mm")</div>
                             </div>
-                            <p class="text-slate-400 small mb-0 opacity-75">@item.descripcion</p>
                         </div>
 
                         <div class="card-footer bg-transparent border-0 pb-3 px-4 d-flex justify-content-between gap-2">

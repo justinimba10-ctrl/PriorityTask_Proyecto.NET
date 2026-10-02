@@ -45,7 +45,7 @@ namespace PriorityTask.Modelos
 
         [Column("fecha_creacion")]
         [Required]
-        public DateTime fechaCreacion { get; set; }
+        public DateTime? fechaCreacion { get; set; }
 
         //Objeots de navegacion
         public Materia? materia { get; set; }

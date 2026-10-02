@@ -19,11 +19,13 @@ public class MateriasController : ControllerBase
         return await _context.Materias.ToListAsync();
     }
 
-    // GET: api/Materia/5
-    [HttpGet("{idmateria}")]
-    public async Task<ActionResult<Materia>> GetMateria(int idmateria)
+    // GET: api/Materias/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Materia>> GetMateria(int id)
     {
-        var materia = await _context.Materias.FindAsync(idmateria);
+        var materia = await _context.Materias
+            .Include(m => m.tareas) // Carga las Tareas vinculadas a esta Materia
+            .FirstOrDefaultAsync(m => m.idMateria == id);
 
         if (materia == null)
         {

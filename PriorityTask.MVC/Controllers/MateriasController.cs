@@ -8,7 +8,7 @@ public class MateriasController : Controller
 
     public ActionResult Index()
     {
-        var materias = CRUD<Materia>.GetAll(_endpoint);
+        var materias = CRUD<Materia>.GetAll(_endpoint) ?? new List<Materia>();
         return View(materias);
     }
 
@@ -19,20 +19,35 @@ public class MateriasController : Controller
         return View(materia);
     }
 
-    public ActionResult Create() => View();
-
+    public ActionResult Create()
+    {
+        return View();
+    }
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Create(Materia materia)
     {
         try
         {
+            materia.idMateria = 0;
+
+            if (materia.idUsuario == 0)
+            {
+                materia.idUsuario = 1;
+            }
+
+            // Si el usuario no escogió un color, asignamos verde neón por defecto
+            if (string.IsNullOrEmpty(materia.codigoColor))
+            {
+                materia.codigoColor = "#22c55e";
+            }
+
             CRUD<Materia>.Create(_endpoint, materia);
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError(string.Empty, "Error al guardar en la API: " + ex.Message);
             return View(materia);
         }
     }
@@ -50,14 +65,18 @@ public class MateriasController : Controller
     {
         try
         {
-            CRUD<Materia>.Update(_endpoint, id, materia);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                CRUD<Materia>.Update(_endpoint, id, materia);
+                return RedirectToAction(nameof(Index));
+            }
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError("", ex.Message);
-            return View(materia);
+            ModelState.AddModelError(string.Empty, "Error al actualizar en la API: " + ex.Message);
         }
+
+        return View(materia);
     }
 
     public ActionResult Delete(int id)
@@ -78,7 +97,7 @@ public class MateriasController : Controller
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError("", ex.Message);
+            ModelState.AddModelError(string.Empty, "Error al eliminar en la API: " + ex.Message);
             return View();
         }
     }

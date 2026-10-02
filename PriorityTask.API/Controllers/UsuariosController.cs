@@ -19,30 +19,31 @@ public class UsuariosController : ControllerBase
         return await _context.Usuarios.ToListAsync();
     }
 
-    // GET: api/Usuario/5
-    [HttpGet("{idusuario}")]
-    public async Task<ActionResult<Usuario>> GetUsuario(int idusuario)
+    // GET: api/Usuarios/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Usuario>> GetUsuario(int id)
     {
-        var usuario = await _context.Usuarios.FindAsync(idusuario);
+        var usuario = await _context.Usuarios
+            .Include(u => u.materias) // Incluye las Materias creadas por el usuario
+            .FirstOrDefaultAsync(u => u.idUsuario == id);
 
-        if (usuario == null)
-        {
-            return NotFound();
-        }
+        if (usuario == null) return NotFound();
 
         return usuario;
     }
 
     // PUT: api/Usuario/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{idusuario}")]
-    public async Task<IActionResult> PutUsuario(int idusuario, Usuario usuario)
+    // PUT: api/Usuarios/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
     {
-        if (idusuario != usuario.idUsuario)
+        if (id != usuario.idUsuario)
         {
-            return BadRequest();
+            return BadRequest("El ID proporcionado no coincide con el registro.");
         }
 
+        // Le indica a Entity Framework que el objeto completo fue modificado
         _context.Entry(usuario).State = EntityState.Modified;
 
         try
@@ -51,7 +52,7 @@ public class UsuariosController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!UsuarioExists(idusuario))
+            if (!_context.Usuarios.Any(e => e.idUsuario == id))
             {
                 return NotFound();
             }
@@ -61,7 +62,7 @@ public class UsuariosController : ControllerBase
             }
         }
 
-        return NoContent();
+        return NoContent(); // Responde 204 si la actualización fue exitosa
     }
 
     // POST: api/Usuario

@@ -12,23 +12,24 @@ public class NotasController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Nota
+    // GET: api/Notas
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Nota>>> GetNota()
+    public async Task<ActionResult<IEnumerable<Nota>>> GetNotas()
     {
-        return await _context.Notas.ToListAsync();
+        return await _context.Notas
+            
+            .ToListAsync();
     }
 
-    // GET: api/Nota/5
-    [HttpGet("{idnota}")]
-    public async Task<ActionResult<Nota>> GetNota(int idnota)
+    // GET: api/Notas/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Nota>> GetNota(int id)
     {
-        var nota = await _context.Notas.FindAsync(idnota);
+        var nota = await _context.Notas
+            .Include(n => n.tarea) // Incluye la Tarea
+            .FirstOrDefaultAsync(n => n.idNota == id);
 
-        if (nota == null)
-        {
-            return NotFound();
-        }
+        if (nota == null) return NotFound();
 
         return nota;
     }

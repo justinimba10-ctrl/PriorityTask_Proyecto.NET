@@ -12,18 +12,24 @@ public class TareasController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Tarea
+    // GET: api/Tareas
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tarea>>> GetTarea()
+    public async Task<ActionResult<IEnumerable<Tarea>>> GetTareas()
     {
-        return await _context.Tareas.ToListAsync();
+        var tareas = await _context.Tareas
+            .Include(t => t.materia)  // Carga la Materia asociada a la Tarea
+            .ToListAsync();
+
+        return tareas;
     }
 
-    // GET: api/Tarea/5
-    [HttpGet("{idtarea}")]
-    public async Task<ActionResult<Tarea>> GetTarea(int idtarea)
+    // GET: api/Tareas/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Tarea>> GetTarea(int id)
     {
-        var tarea = await _context.Tareas.FindAsync(idtarea);
+        var tarea = await _context.Tareas
+            .Include(t => t.materia)  // Carga la Materia asociada
+            .FirstOrDefaultAsync(t => t.idTarea == id);
 
         if (tarea == null)
         {

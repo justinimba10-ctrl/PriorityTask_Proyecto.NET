@@ -12,27 +12,27 @@ public class SubtareasController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Subtarea
+    // GET: api/Subtareas
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Subtarea>>> GetSubtarea()
+    public async Task<ActionResult<IEnumerable<Subtarea>>> GetSubtareas()
     {
-        return await _context.Subtareas.ToListAsync();
+        return await _context.Subtareas
+            .Include(s => s.tarea) // Incluye la información de la Tarea
+            .ToListAsync();
     }
 
-    // GET: api/Subtarea/5
-    [HttpGet("{idsubtarea}")]
-    public async Task<ActionResult<Subtarea>> GetSubtarea(int idsubtarea)
+    // GET: api/Subtareas/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Subtarea>> GetSubtarea(int id)
     {
-        var subtarea = await _context.Subtareas.FindAsync(idsubtarea);
+        var subtarea = await _context.Subtareas
+            .Include(s => s.tarea) // Incluye la Tarea
+            .FirstOrDefaultAsync(s => s.idSubtarea == id);
 
-        if (subtarea == null)
-        {
-            return NotFound();
-        }
+        if (subtarea == null) return NotFound();
 
         return subtarea;
     }
-
     // PUT: api/Subtarea/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{idsubtarea}")]

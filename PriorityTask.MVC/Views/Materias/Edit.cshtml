@@ -7,7 +7,6 @@
     .header-neon { background-color: #1e293b; border-left: 5px solid #22c55e; border-radius: 8px; }
     .text-neon { color: #22c55e !important; }
     .btn-neon { background-color: #22c55e; color: #0f172a; font-weight: 600; border: none; }
-    .btn-neon:hover { background-color: #16a34a; color: #fff; }
     .form-control-dark { background-color: #0f172a; border: 1px solid #334155; color: #f8fafc; }
 </style>
 
@@ -15,20 +14,28 @@
     <div class="mb-4 p-4 header-neon shadow-sm d-flex justify-content-between align-items-center">
         <div>
             <h3 class="fw-bold mb-1 text-white"><i class="bi bi-pencil-square text-neon me-2"></i>Editar Materia</h3>
-            <p class="text-muted mb-0 small">Modifica el nombre de la asignatura</p>
         </div>
         <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-3"><i class="bi bi-arrow-left me-1"></i> Volver</a>
     </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card dark-card p-4 shadow-lg">
                 <form asp-action="Edit">
                     <input type="hidden" asp-for="idMateria" />
-                    <div class="mb-4">
+
+                    <div class="mb-3">
                         <label class="form-label text-neon fw-bold">Nombre de la Materia</label>
                         <input asp-for="nombre" class="form-control form-control-dark" />
                         <span asp-validation-for="nombre" class="text-danger small"></span>
                     </div>
+
+                    <div class="mb-4">
+                        <label class="form-label text-neon fw-bold">Nombre del Docente</label>
+                        <input asp-for="docente" class="form-control form-control-dark" />
+                        <span asp-validation-for="docente" class="text-danger small"></span>
+                    </div>
+
                     <div class="d-flex justify-content-end gap-2">
                         <a asp-action="Index" class="btn btn-outline-light rounded-pill px-4">Cancelar</a>
                         <button type="submit" class="btn btn-neon rounded-pill px-4"><i class="bi bi-check-lg me-1"></i> Guardar Cambios</button>

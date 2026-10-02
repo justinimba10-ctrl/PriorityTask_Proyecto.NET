@@ -14,6 +14,7 @@ namespace PriorityTask.Modelos
     {
         [Key]
         [Column("id_materia")]
+        [JsonPropertyName("idMateria")]
         public int idMateria { get; set; }
 
         [ForeignKey("usuario")]
@@ -22,26 +23,25 @@ namespace PriorityTask.Modelos
         public int idUsuario { get; set; }
 
         [Column("nombre")]
-        [MaxLength(100)]
+        [JsonPropertyName("nombre")]
         [Required]
         public string nombre { get; set; }
 
         [Column("codigo_color")]
-        [MaxLength(7)]
         [Required]
-        public string codigoColor { get; set; }
+        public string? codigoColor { get; set; }
 
         [Column("docente")]
-        [MaxLength(100)]
+        [JsonPropertyName("docente")]
         [Required]
-        public string docente { get; set; }
+        public string? docente { get; set; }
 
         //Objetos de navegacion
         public Usuario? usuario { get; set; }
 
         //Relaciones
         [JsonIgnore]
-        public List<Tarea> tareas { get; set; } = new List<Tarea>();
+        public List<Tarea>? tareas { get; set; } = new List<Tarea>();
         [JsonIgnore]
         public List<Nota> notas { get; set; } = new List<Nota>();
     }

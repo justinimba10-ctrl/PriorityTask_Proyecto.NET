@@ -37,6 +37,7 @@ public class UsuariosController : Controller
         }
     }
 
+    // GET: Muestra el formulario para editar
     public ActionResult Edit(int id)
     {
         var usuario = CRUD<Usuario>.GetById(_endpoint, id);
@@ -44,12 +45,14 @@ public class UsuariosController : Controller
         return View(usuario);
     }
 
+    // POST: Recibe los datos y actualiza en la API
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Edit(int id, Usuario usuario)
     {
         try
         {
+            // Pasa correctamente los 3 parámetros que requiere tu helper
             CRUD<Usuario>.Update(_endpoint, id, usuario);
             return RedirectToAction(nameof(Index));
         }

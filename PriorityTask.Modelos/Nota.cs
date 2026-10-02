@@ -27,6 +27,13 @@ namespace PriorityTask.Modelos
         [Required]
         public string titulo { get; set; }
 
+        public int idTarea { get; set; }
+
+        // --- AGREGA ESTA PROPIEDAD DE NAVEGACIÓN ---
+        public Tarea? tarea { get; set; }
+
+        public string observacion { get; set; }
+
         [Column("contenido")]
         [Required]
         public string contenido { get; set; }
