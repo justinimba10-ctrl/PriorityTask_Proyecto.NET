@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 
 namespace PriorityTask.Modelos
@@ -16,7 +13,6 @@ namespace PriorityTask.Modelos
         [Column("id_tarea")]
         public int idTarea { get; set; }
 
-        [ForeignKey("materia")]
         [Column("id_materia")]
         [Required]
         public int idMateria { get; set; }
@@ -24,11 +20,11 @@ namespace PriorityTask.Modelos
         [Column("titulo")]
         [MaxLength(150)]
         [Required]
-        public string titulo { get; set; }
+        public string titulo { get; set; } = string.Empty;
 
         [Column("descripcion")]
         [Required]
-        public string descripcion { get; set; }
+        public string descripcion { get; set; } = string.Empty;
 
         [Column("fecha_limite")]
         [Required]
@@ -44,14 +40,16 @@ namespace PriorityTask.Modelos
         public string estado { get; set; } = "Pendiente";
 
         [Column("fecha_creacion")]
-        [Required]
         public DateTime? fechaCreacion { get; set; }
 
-        //Objeots de navegacion
+        // Objeto de navegación para Materia
+        [ForeignKey("idMateria")]
+        [JsonIgnore]
         public Materia? materia { get; set; }
 
-        //Relaciones
+        // Relaciones con JsonIgnore para evitar referencias circulares
         [JsonIgnore]
         public List<Subtarea> subtareas { get; set; } = new List<Subtarea>();
+
     }
 }

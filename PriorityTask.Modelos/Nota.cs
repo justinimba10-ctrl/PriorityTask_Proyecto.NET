@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 
 namespace PriorityTask.Modelos
@@ -17,7 +13,6 @@ namespace PriorityTask.Modelos
         [Required]
         public int idNota { get; set; }
 
-        [ForeignKey("materia")]
         [Column("id_materia")]
         [Required]
         public int idMateria { get; set; }
@@ -25,29 +20,22 @@ namespace PriorityTask.Modelos
         [Column("titulo")]
         [MaxLength(150)]
         [Required]
-        public string titulo { get; set; }
-
-        public int idTarea { get; set; }
-
-        // --- AGREGA ESTA PROPIEDAD DE NAVEGACIÓN ---
-        public Tarea? tarea { get; set; }
-
-        public string observacion { get; set; }
+        public string titulo { get; set; } = string.Empty;
 
         [Column("contenido")]
         [Required]
-        public string contenido { get; set; }
+        public string contenido { get; set; } = string.Empty;
 
         [Column("fecha_creacion")]
         [Required]
         public DateTime fechaCreacion { get; set; }
 
-
         [Column("fecha_actualizacion")]
         [Required]
         public DateTime fechaActualizacion { get; set; }
 
-        //Objetos de navegacion
+        // Objeto de navegación para Materia
+        [ForeignKey("idMateria")]
         [JsonIgnore]
         public Materia? materia { get; set; }
     }

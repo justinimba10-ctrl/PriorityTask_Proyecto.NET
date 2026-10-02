@@ -2,98 +2,99 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PriorityTask.Modelos;
 
-[Route("api/[controller]")]
-[ApiController]
-public class NotasController : ControllerBase
+namespace PriorityTask.API.Controllers
 {
-    private readonly PriorityTaskAPIContext _context;
-    public NotasController(PriorityTaskAPIContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class NotasController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly PriorityTaskAPIContext _context;
 
-    // GET: api/Notas
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Nota>>> GetNotas()
-    {
-        return await _context.Notas
-            
-            .ToListAsync();
-    }
-
-    // GET: api/Notas/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Nota>> GetNota(int id)
-    {
-        var nota = await _context.Notas
-            .Include(n => n.tarea) // Incluye la Tarea
-            .FirstOrDefaultAsync(n => n.idNota == id);
-
-        if (nota == null) return NotFound();
-
-        return nota;
-    }
-
-    // PUT: api/Nota/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{idnota}")]
-    public async Task<IActionResult> PutNota(int idnota, Nota nota)
-    {
-        if (idnota != nota.idNota)
+        public NotasController(PriorityTaskAPIContext context)
         {
-            return BadRequest();
+            _context = context;
         }
 
-        _context.Entry(nota).State = EntityState.Modified;
-
-        try
+        // GET: api/Notas
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Nota>>> GetNotas()
         {
-            await _context.SaveChangesAsync();
+            return await _context.Notas.ToListAsync();
         }
-        catch (DbUpdateConcurrencyException)
+
+        // GET: api/Notas/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Nota>> GetNota(int id)
         {
-            if (!NotaExists(idnota))
+            var nota = await _context.Notas.FindAsync(id);
+
+            if (nota == null)
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+
+            return nota;
         }
 
-        return NoContent();
-    }
-
-    // POST: api/Nota
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
-    public async Task<ActionResult<Nota>> PostNota(Nota nota)
-    {
-        _context.Notas.Add(nota);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction("GetNota", new { idnota = nota.idNota }, nota);
-    }
-
-    // DELETE: api/Nota/5
-    [HttpDelete("{idnota}")]
-    public async Task<IActionResult> DeleteNota(int idnota)
-    {
-        var nota = await _context.Notas.FindAsync(idnota);
-        if (nota == null)
+        // PUT: api/Notas/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutNota(int id, Nota nota)
         {
-            return NotFound();
+            if (id != nota.idNota)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(nota).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!NotaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        _context.Notas.Remove(nota);
-        await _context.SaveChangesAsync();
+        // POST: api/Notas
+        [HttpPost]
+        public async Task<ActionResult<Nota>> PostNota(Nota nota)
+        {
+            _context.Notas.Add(nota);
+            await _context.SaveChangesAsync();
 
-        return NoContent();
-    }
+            return CreatedAtAction(nameof(GetNota), new { id = nota.idNota }, nota);
+        }
 
-    private bool NotaExists(int idnota)
-    {
-        return _context.Notas.Any(e => e.idNota == idnota);
+        // DELETE: api/Notas/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteNota(int id)
+        {
+            var nota = await _context.Notas.FindAsync(id);
+            if (nota == null)
+            {
+                return NotFound();
+            }
+
+            _context.Notas.Remove(nota);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool NotaExists(int id)
+        {
+            return _context.Notas.Any(e => e.idNota == id);
+        }
     }
 }

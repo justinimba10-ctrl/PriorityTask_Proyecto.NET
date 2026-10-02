@@ -10,24 +10,24 @@ namespace PriorityTask.Consumer
 {
     public static class CRUD<T>
     {
-         
+
         public static List<T> GetAll(string Endpoint)
         {
             using (var usuario = new HttpClient())
             {
                 var response = usuario.GetAsync(Endpoint).Result;
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     var json = response.Content.ReadAsStringAsync().Result;
                     return JsonConvert.DeserializeObject<List<T>>(json);
-
                 }
                 else
                 {
-                    throw new Exception($"Error: {response.StatusCode}");
+                    // Captura el texto/excepción que devuelve la Web API
+                    var errorContent = response.Content.ReadAsStringAsync().Result;
+                    throw new Exception($"Error {response.StatusCode}: {errorContent}");
                 }
             }
-       
         }
         public static T GetById(string Endpoint,int id)
         {
