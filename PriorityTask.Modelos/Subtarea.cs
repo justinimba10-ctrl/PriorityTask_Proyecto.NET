@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace PriorityTask.Modelos
 {
@@ -31,6 +32,7 @@ namespace PriorityTask.Modelos
         public bool esCompletada { get; set; }
 
         //objetos de navegacion
+        [JsonIgnore]
         public Tarea? tarea { get; set; }
 
         //

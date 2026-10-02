@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace PriorityTask.Modelos
 {
@@ -39,7 +40,9 @@ namespace PriorityTask.Modelos
         public Usuario? usuario { get; set; }
 
         //Relaciones
+        [JsonIgnore]
         public List<Tarea> tareas { get; set; } = new List<Tarea>();
+        [JsonIgnore]
         public List<Nota> notas { get; set; } = new List<Nota>();
     }
 }

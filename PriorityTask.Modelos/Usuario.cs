@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+
 
 namespace PriorityTask.Modelos
 {
@@ -40,6 +42,7 @@ namespace PriorityTask.Modelos
         public DateTime fechaRegistro { get; set; } = DateTime.Now;
 
         //Relaciones
+        [JsonIgnore]
         public List<Materia> materias { get; set; } = new List<Materia>();
 
 

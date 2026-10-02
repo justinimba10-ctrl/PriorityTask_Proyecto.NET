@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace PriorityTask.Modelos
 {
@@ -40,6 +41,7 @@ namespace PriorityTask.Modelos
         public DateTime fechaActualizacion { get; set; }
 
         //Objetos de navegacion
+        [JsonIgnore]
         public Materia? materia { get; set; }
     }
 }

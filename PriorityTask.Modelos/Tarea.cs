@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace PriorityTask.Modelos
 {
@@ -50,6 +51,7 @@ namespace PriorityTask.Modelos
         public Materia? materia { get; set; }
 
         //Relaciones
+        [JsonIgnore]
         public List<Subtarea> subtareas { get; set; } = new List<Subtarea>();
     }
 }

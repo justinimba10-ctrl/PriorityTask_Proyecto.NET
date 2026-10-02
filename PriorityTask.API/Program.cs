@@ -1,43 +1,39 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
-using PriorityTask.API;
+using PriorityTask.API; // Ajusta este namespace según tu DbContext
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Postgres") ?? throw new InvalidOperationException("Connection string 'Postgres' not found.");
+
+// 1. Conexión a la base de datos PostgreSQL
+var connectionString = builder.Configuration.GetConnectionString("Postgres")
+    ?? throw new InvalidOperationException("Connection string 'Postgres' not found.");
 
 builder.Services.AddDbContext<PriorityTaskAPIContext>(options =>
     options.UseNpgsql(connectionString));
 
+// 2. Controladores con manejo de ciclos
 builder.Services.AddControllers()
-    .AddNewtonsoftJson(options =>
+    .AddJsonOptions(options =>
     {
-        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
-// Add services to the container.
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// 3. Configuración estándar de Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.CustomSchemaIds(type => type.FullName);
-});
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-app.UseSwaggerUI(c =>
+// 4. Pipeline de Swagger
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PriorityTask API v1");
-});
-//}
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
