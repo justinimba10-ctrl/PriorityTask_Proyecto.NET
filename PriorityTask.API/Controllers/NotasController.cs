@@ -36,7 +36,7 @@ public class NotasController : ControllerBase
     // PUT: api/Nota/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{idnota}")]
-    public async Task<IActionResult> PutNota(int? idnota, Nota nota)
+    public async Task<IActionResult> PutNota(int idnota, Nota nota)
     {
         if (idnota != nota.idNota)
         {
@@ -77,7 +77,7 @@ public class NotasController : ControllerBase
 
     // DELETE: api/Nota/5
     [HttpDelete("{idnota}")]
-    public async Task<IActionResult> DeleteNota(int? idnota)
+    public async Task<IActionResult> DeleteNota(int idnota)
     {
         var nota = await _context.Notas.FindAsync(idnota);
         if (nota == null)
@@ -91,7 +91,7 @@ public class NotasController : ControllerBase
         return NoContent();
     }
 
-    private bool NotaExists(int? idnota)
+    private bool NotaExists(int idnota)
     {
         return _context.Notas.Any(e => e.idNota == idnota);
     }

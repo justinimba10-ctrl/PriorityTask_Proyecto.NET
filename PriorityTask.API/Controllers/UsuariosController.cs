@@ -36,7 +36,7 @@ public class UsuariosController : ControllerBase
     // PUT: api/Usuario/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{idusuario}")]
-    public async Task<IActionResult> PutUsuario(int? idusuario, Usuario usuario)
+    public async Task<IActionResult> PutUsuario(int idusuario, Usuario usuario)
     {
         if (idusuario != usuario.idUsuario)
         {
@@ -77,7 +77,7 @@ public class UsuariosController : ControllerBase
 
     // DELETE: api/Usuario/5
     [HttpDelete("{idusuario}")]
-    public async Task<IActionResult> DeleteUsuario(int? idusuario)
+    public async Task<IActionResult> DeleteUsuario(int idusuario)
     {
         var usuario = await _context.Usuarios.FindAsync(idusuario);
         if (usuario == null)
@@ -91,7 +91,7 @@ public class UsuariosController : ControllerBase
         return NoContent();
     }
 
-    private bool UsuarioExists(int? idusuario)
+    private bool UsuarioExists(int idusuario)
     {
         return _context.Usuarios.Any(e => e.idUsuario == idusuario);
     }

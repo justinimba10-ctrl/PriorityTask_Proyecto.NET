@@ -36,7 +36,7 @@ public class SubtareasController : ControllerBase
     // PUT: api/Subtarea/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{idsubtarea}")]
-    public async Task<IActionResult> PutSubtarea(int? idsubtarea, Subtarea subtarea)
+    public async Task<IActionResult> PutSubtarea(int idsubtarea, Subtarea subtarea)
     {
         if (idsubtarea != subtarea.idSubtarea)
         {
@@ -77,7 +77,7 @@ public class SubtareasController : ControllerBase
 
     // DELETE: api/Subtarea/5
     [HttpDelete("{idsubtarea}")]
-    public async Task<IActionResult> DeleteSubtarea(int? idsubtarea)
+    public async Task<IActionResult> DeleteSubtarea(int idsubtarea)
     {
         var subtarea = await _context.Subtareas.FindAsync(idsubtarea);
         if (subtarea == null)
@@ -91,7 +91,7 @@ public class SubtareasController : ControllerBase
         return NoContent();
     }
 
-    private bool SubtareaExists(int? idsubtarea)
+    private bool SubtareaExists(int idsubtarea)
     {
         return _context.Subtareas.Any(e => e.idSubtarea == idsubtarea);
     }

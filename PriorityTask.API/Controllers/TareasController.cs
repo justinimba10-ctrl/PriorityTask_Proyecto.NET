@@ -36,7 +36,7 @@ public class TareasController : ControllerBase
     // PUT: api/Tarea/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{idtarea}")]
-    public async Task<IActionResult> PutTarea(int? idtarea, Tarea tarea)
+    public async Task<IActionResult> PutTarea(int idtarea, Tarea tarea)
     {
         if (idtarea != tarea.idTarea)
         {
@@ -77,7 +77,7 @@ public class TareasController : ControllerBase
 
     // DELETE: api/Tarea/5
     [HttpDelete("{idtarea}")]
-    public async Task<IActionResult> DeleteTarea(int? idtarea)
+    public async Task<IActionResult> DeleteTarea(int idtarea)
     {
         var tarea = await _context.Tareas.FindAsync(idtarea);
         if (tarea == null)
@@ -91,7 +91,7 @@ public class TareasController : ControllerBase
         return NoContent();
     }
 
-    private bool TareaExists(int? idtarea)
+    private bool TareaExists(int idtarea)
     {
         return _context.Tareas.Any(e => e.idTarea == idtarea);
     }

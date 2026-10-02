@@ -36,7 +36,7 @@ public class MateriasController : ControllerBase
     // PUT: api/Materia/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{idmateria}")]
-    public async Task<IActionResult> PutMateria(int? idmateria, Materia materia)
+    public async Task<IActionResult> PutMateria(int idmateria, Materia materia)
     {
         if (idmateria != materia.idMateria)
         {
@@ -77,7 +77,7 @@ public class MateriasController : ControllerBase
 
     // DELETE: api/Materia/5
     [HttpDelete("{idmateria}")]
-    public async Task<IActionResult> DeleteMateria(int? idmateria)
+    public async Task<IActionResult> DeleteMateria(int idmateria)
     {
         var materia = await _context.Materias.FindAsync(idmateria);
         if (materia == null)
@@ -91,7 +91,7 @@ public class MateriasController : ControllerBase
         return NoContent();
     }
 
-    private bool MateriaExists(int? idmateria)
+    private bool MateriaExists(int idmateria)
     {
         return _context.Materias.Any(e => e.idMateria == idmateria);
     }
