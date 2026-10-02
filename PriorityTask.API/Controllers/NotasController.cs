@@ -16,14 +16,14 @@ public class NotasController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Nota>>> GetNota()
     {
-        return await _context.Nota.ToListAsync();
+        return await _context.Notas.ToListAsync();
     }
 
     // GET: api/Nota/5
     [HttpGet("{idnota}")]
     public async Task<ActionResult<Nota>> GetNota(int idnota)
     {
-        var nota = await _context.Nota.FindAsync(idnota);
+        var nota = await _context.Notas.FindAsync(idnota);
 
         if (nota == null)
         {
@@ -69,7 +69,7 @@ public class NotasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Nota>> PostNota(Nota nota)
     {
-        _context.Nota.Add(nota);
+        _context.Notas.Add(nota);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetNota", new { idnota = nota.idNota }, nota);
@@ -79,13 +79,13 @@ public class NotasController : ControllerBase
     [HttpDelete("{idnota}")]
     public async Task<IActionResult> DeleteNota(int? idnota)
     {
-        var nota = await _context.Nota.FindAsync(idnota);
+        var nota = await _context.Notas.FindAsync(idnota);
         if (nota == null)
         {
             return NotFound();
         }
 
-        _context.Nota.Remove(nota);
+        _context.Notas.Remove(nota);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -93,6 +93,6 @@ public class NotasController : ControllerBase
 
     private bool NotaExists(int? idnota)
     {
-        return _context.Nota.Any(e => e.idNota == idnota);
+        return _context.Notas.Any(e => e.idNota == idnota);
     }
 }

@@ -16,14 +16,14 @@ public class TareasController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Tarea>>> GetTarea()
     {
-        return await _context.Tarea.ToListAsync();
+        return await _context.Tareas.ToListAsync();
     }
 
     // GET: api/Tarea/5
     [HttpGet("{idtarea}")]
     public async Task<ActionResult<Tarea>> GetTarea(int idtarea)
     {
-        var tarea = await _context.Tarea.FindAsync(idtarea);
+        var tarea = await _context.Tareas.FindAsync(idtarea);
 
         if (tarea == null)
         {
@@ -69,7 +69,7 @@ public class TareasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Tarea>> PostTarea(Tarea tarea)
     {
-        _context.Tarea.Add(tarea);
+        _context.Tareas.Add(tarea);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetTarea", new { idtarea = tarea.idTarea }, tarea);
@@ -79,13 +79,13 @@ public class TareasController : ControllerBase
     [HttpDelete("{idtarea}")]
     public async Task<IActionResult> DeleteTarea(int? idtarea)
     {
-        var tarea = await _context.Tarea.FindAsync(idtarea);
+        var tarea = await _context.Tareas.FindAsync(idtarea);
         if (tarea == null)
         {
             return NotFound();
         }
 
-        _context.Tarea.Remove(tarea);
+        _context.Tareas.Remove(tarea);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -93,6 +93,6 @@ public class TareasController : ControllerBase
 
     private bool TareaExists(int? idtarea)
     {
-        return _context.Tarea.Any(e => e.idTarea == idtarea);
+        return _context.Tareas.Any(e => e.idTarea == idtarea);
     }
 }

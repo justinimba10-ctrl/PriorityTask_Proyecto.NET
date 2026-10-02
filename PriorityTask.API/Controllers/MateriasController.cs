@@ -16,14 +16,14 @@ public class MateriasController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Materia>>> GetMateria()
     {
-        return await _context.Materia.ToListAsync();
+        return await _context.Materias.ToListAsync();
     }
 
     // GET: api/Materia/5
     [HttpGet("{idmateria}")]
     public async Task<ActionResult<Materia>> GetMateria(int idmateria)
     {
-        var materia = await _context.Materia.FindAsync(idmateria);
+        var materia = await _context.Materias.FindAsync(idmateria);
 
         if (materia == null)
         {
@@ -69,7 +69,7 @@ public class MateriasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Materia>> PostMateria(Materia materia)
     {
-        _context.Materia.Add(materia);
+        _context.Materias.Add(materia);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetMateria", new { idmateria = materia.idMateria }, materia);
@@ -79,13 +79,13 @@ public class MateriasController : ControllerBase
     [HttpDelete("{idmateria}")]
     public async Task<IActionResult> DeleteMateria(int? idmateria)
     {
-        var materia = await _context.Materia.FindAsync(idmateria);
+        var materia = await _context.Materias.FindAsync(idmateria);
         if (materia == null)
         {
             return NotFound();
         }
 
-        _context.Materia.Remove(materia);
+        _context.Materias.Remove(materia);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -93,6 +93,6 @@ public class MateriasController : ControllerBase
 
     private bool MateriaExists(int? idmateria)
     {
-        return _context.Materia.Any(e => e.idMateria == idmateria);
+        return _context.Materias.Any(e => e.idMateria == idmateria);
     }
 }

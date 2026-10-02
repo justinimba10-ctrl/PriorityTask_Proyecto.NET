@@ -16,14 +16,14 @@ public class UsuariosController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
     {
-        return await _context.Usuario.ToListAsync();
+        return await _context.Usuarios.ToListAsync();
     }
 
     // GET: api/Usuario/5
     [HttpGet("{idusuario}")]
     public async Task<ActionResult<Usuario>> GetUsuario(int idusuario)
     {
-        var usuario = await _context.Usuario.FindAsync(idusuario);
+        var usuario = await _context.Usuarios.FindAsync(idusuario);
 
         if (usuario == null)
         {
@@ -69,7 +69,7 @@ public class UsuariosController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
     {
-        _context.Usuario.Add(usuario);
+        _context.Usuarios.Add(usuario);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetUsuario", new { idusuario = usuario.idUsuario }, usuario);
@@ -79,13 +79,13 @@ public class UsuariosController : ControllerBase
     [HttpDelete("{idusuario}")]
     public async Task<IActionResult> DeleteUsuario(int? idusuario)
     {
-        var usuario = await _context.Usuario.FindAsync(idusuario);
+        var usuario = await _context.Usuarios.FindAsync(idusuario);
         if (usuario == null)
         {
             return NotFound();
         }
 
-        _context.Usuario.Remove(usuario);
+        _context.Usuarios.Remove(usuario);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -93,6 +93,6 @@ public class UsuariosController : ControllerBase
 
     private bool UsuarioExists(int? idusuario)
     {
-        return _context.Usuario.Any(e => e.idUsuario == idusuario);
+        return _context.Usuarios.Any(e => e.idUsuario == idusuario);
     }
 }

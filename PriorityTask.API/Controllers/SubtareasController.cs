@@ -16,14 +16,14 @@ public class SubtareasController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Subtarea>>> GetSubtarea()
     {
-        return await _context.Subtarea.ToListAsync();
+        return await _context.Subtareas.ToListAsync();
     }
 
     // GET: api/Subtarea/5
     [HttpGet("{idsubtarea}")]
     public async Task<ActionResult<Subtarea>> GetSubtarea(int idsubtarea)
     {
-        var subtarea = await _context.Subtarea.FindAsync(idsubtarea);
+        var subtarea = await _context.Subtareas.FindAsync(idsubtarea);
 
         if (subtarea == null)
         {
@@ -69,7 +69,7 @@ public class SubtareasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Subtarea>> PostSubtarea(Subtarea subtarea)
     {
-        _context.Subtarea.Add(subtarea);
+        _context.Subtareas.Add(subtarea);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetSubtarea", new { idsubtarea = subtarea.idSubtarea }, subtarea);
@@ -79,13 +79,13 @@ public class SubtareasController : ControllerBase
     [HttpDelete("{idsubtarea}")]
     public async Task<IActionResult> DeleteSubtarea(int? idsubtarea)
     {
-        var subtarea = await _context.Subtarea.FindAsync(idsubtarea);
+        var subtarea = await _context.Subtareas.FindAsync(idsubtarea);
         if (subtarea == null)
         {
             return NotFound();
         }
 
-        _context.Subtarea.Remove(subtarea);
+        _context.Subtareas.Remove(subtarea);
         await _context.SaveChangesAsync();
 
         return NoContent();
@@ -93,6 +93,6 @@ public class SubtareasController : ControllerBase
 
     private bool SubtareaExists(int? idsubtarea)
     {
-        return _context.Subtarea.Any(e => e.idSubtarea == idsubtarea);
+        return _context.Subtareas.Any(e => e.idSubtarea == idsubtarea);
     }
 }
