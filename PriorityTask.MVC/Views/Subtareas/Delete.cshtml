@@ -1,0 +1,44 @@
+@model PriorityTask.Modelos.Subtarea
+@{ ViewData["Title"] = "Eliminar Subtarea"; }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    body { background-color: #0f172a !important; color: #f8fafc; }
+    .dark-card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; }
+    .header-danger { background-color: #1e293b; border-left: 5px solid #ef4444; border-radius: 8px; }
+    .text-danger-custom { color: #ef4444 !important; }
+</style>
+
+<div class="container py-4">
+    <div class="mb-4 p-4 header-danger shadow-sm d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="fw-bold mb-1 text-white"><i class="bi bi-trash text-danger-custom me-2"></i>Eliminar Subtarea</h3>
+            <p class="text-muted mb-0 small">¿Deseas eliminar esta subtarea?</p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-3">Cancelar</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card dark-card p-4 shadow-lg border-danger">
+                <span class="badge bg-danger text-white rounded-pill px-3 py-1 mb-3 w-auto align-self-start">
+                    ID: #@Model.idSubtarea
+                </span>
+                <div class="mb-3">
+                    <label class="text-danger-custom fw-bold d-block">Tarea Asociada</label>
+                    <span class="text-light">@(ViewBag.NombreTarea ?? "Sin Tarea")</span>
+                </div>
+                <div class="mb-4">
+                    <label class="text-danger-custom fw-bold d-block">Descripción</label>
+                    <p class="text-slate-300">@Model.descripcion</p>
+                </div>
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="idSubtarea" />
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-outline-light rounded-pill px-4">Cancelar</a>
+                        <button type="submit" class="btn btn-danger rounded-pill px-4"><i class="bi bi-trash me-1"></i> Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

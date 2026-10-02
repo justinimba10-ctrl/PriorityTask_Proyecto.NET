@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "Página Principal";
+}
+
+<style>
+    .hero-card {
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-left: 6px solid #22c55e;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .module-card {
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 14px;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .module-card:hover {
+        transform: translateY(-6px);
+        border-color: #22c55e;
+        box-shadow: 0 12px 28px rgba(34, 197, 94, 0.2);
+    }
+
+    .icon-glow {
+        width: 60px;
+        height: 60px;
+        background-color: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+        border: 1px solid #22c55e;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+    }
+
+    .btn-neon-home {
+        background-color: #22c55e;
+        color: #0f172a;
+        font-weight: 700;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-neon-home:hover {
+        background-color: #16a34a;
+        color: #ffffff;
+        box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+    }
+</style>
+
+<div class="container py-4">
+    <!-- Banner Principal -->
+    <div class="hero-card p-5 mb-5 text-white">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge bg-slate-800 text-success border border-success rounded-pill px-3 py-2 mb-3">
+                    <i class="bi bi-rocket-takeoff-fill me-1"></i> Sistema Activo
+                </span>
+                <h1 class="display-5 fw-bold mb-3">Bienvenido a <span style="color: #22c55e;">PriorityTask</span></h1>
+                <p class="fs-5 text-slate-300 mb-4" style="color: #94a3b8;">
+                    Plataforma centralizada para la gestión eficiente de tareas, asignación de materias y control de usuarios.
+                </p>
+            </div>
+            <div class="col-lg-4 text-center d-none d-lg-block">
+                <i class="bi bi-kanban text-success opacity-75" style="font-size: 7rem;"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Módulos de Acceso Rápido -->
+    <h4 class="fw-bold text-white mb-4 d-flex align-items-center gap-2">
+        <i class="bi bi-grid-fill" style="color: #22c55e;"></i> Módulos Disponibles
+    </h4>
+
+    <div class="row g-4">
+        <!-- Tarjeta Usuarios -->
+        <div class="col-md-6">
+            <div class="card module-card h-100 p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-glow me-3">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-white mb-0">Gestión de Usuarios</h4>
+                        <small class="text-muted">Módulo de administración</small>
+                    </div>
+                </div>
+                <p class="text-slate-400 mb-4" style="color: #94a3b8;">
+                    Consulta, registra, edita o elimina los perfiles de usuario integrados en la API.
+                </p>
+                <div class="mt-auto">
+                    <a asp-controller="Usuarios" asp-action="Index" class="btn btn-neon-home rounded-pill px-4">
+                        Acceder a Usuarios <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta Materias -->
+        <div class="col-md-6">
+            <div class="card module-card h-100 p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-glow me-3">
+                        <i class="bi bi-journal-bookmark-fill"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-white mb-0">Gestión de Materias</h4>
+                        <small class="text-muted">Módulo académico</small>
+                    </div>
+                </div>
+                <p class="text-slate-400 mb-4" style="color: #94a3b8;">
+                    Organiza las asignaturas registradas y administra sus detalles en tiempo real.
+                </p>
+                <div class="mt-auto">
+                    <a asp-controller="Materias" asp-action="Index" class="btn btn-neon-home rounded-pill px-4">
+                        Acceder a Materias <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

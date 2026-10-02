@@ -20,7 +20,7 @@ namespace PriorityTask.Modelos
         [ForeignKey("tarea")]
         [Column("id_tarea")]
         [Required]
-        public int id_tarea { get; set; }
+        public int idTarea { get; set; }
 
         [Column("descripcion")]
         [MaxLength(200)]

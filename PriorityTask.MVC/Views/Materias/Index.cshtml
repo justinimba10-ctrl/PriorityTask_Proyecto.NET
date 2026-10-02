@@ -1,0 +1,134 @@
+@model IEnumerable<PriorityTask.Modelos.Materia>
+
+@{
+    ViewData["Title"] = "Gestión de Materias";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+    body {
+        background-color: #0f172a !important;
+        color: #f8fafc;
+    }
+
+    .dark-card {
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .dark-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.15);
+        border-color: #22c55e;
+    }
+
+    .header-neon {
+        background-color: #1e293b;
+        border-left: 5px solid #22c55e;
+        border-radius: 8px;
+    }
+
+    .text-neon {
+        color: #22c55e !important;
+    }
+
+    .btn-neon {
+        background-color: #22c55e;
+        color: #0f172a;
+        font-weight: 600;
+        border: none;
+    }
+
+    .btn-neon:hover {
+        background-color: #16a34a;
+        color: #ffffff;
+    }
+
+    .icon-box-neon {
+        width: 48px;
+        height: 48px;
+        background-color: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+        border: 1px solid #22c55e;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+    }
+</style>
+
+<div class="container py-4" translate="no">
+    <!-- Encabezado Principal -->
+    <div class="d-flex justify-content-between align-items-center mb-4 p-4 header-neon shadow-sm">
+        <div>
+            <h3 class="fw-bold mb-1 d-flex align-items-center gap-2 text-white">
+                <i class="bi bi-journal-bookmark-fill text-neon"></i>
+                Gestión de Materias
+            </h3>
+            <p class="text-muted mb-0 small">Administra las asignaturas asignadas en PriorityTask</p>
+        </div>
+        <div>
+            <a asp-action="Create" class="btn btn-neon rounded-pill px-4 shadow-sm">
+                <i class="bi bi-journal-plus me-1"></i> + Nueva Materia
+            </a>
+        </div>
+    </div>
+
+    <!-- Rejilla de Tarjetas -->
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card dark-card h-100">
+                        <div class="card-header border-bottom border-slate-700 bg-transparent py-3 d-flex align-items-center justify-content-between">
+                            <span class="badge bg-slate-800 text-neon border border-emerald-500 rounded-pill px-3 py-1">
+                                ID: #@item.idMateria
+                            </span>
+                            <i class="bi bi-book text-neon fs-5"></i>
+                        </div>
+
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="icon-box-neon me-3">
+                                    <i class="bi bi-journals"></i>
+                                </div>
+                                <div>
+                                    <h5 class="card-title fw-bold text-white mb-0">@item.nombre</h5>
+                                    <small class="text-neon">Materia Cursando</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-transparent border-0 pb-3 px-4 d-flex justify-content-between gap-2">
+                            <a asp-action="Details" asp-route-id="@item.idMateria" class="btn btn-sm btn-outline-info rounded-pill flex-fill">
+                                <i class="bi bi-eye me-1"></i>Ver
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.idMateria" class="btn btn-sm btn-outline-warning rounded-pill flex-fill">
+                                <i class="bi bi-pencil me-1"></i>Editar
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.idMateria" class="btn btn-sm btn-outline-danger rounded-pill flex-fill">
+                                <i class="bi bi-trash me-1"></i>Borrar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="card dark-card p-5 text-center">
+                    <i class="bi bi-inbox text-neon display-4 mb-3"></i>
+                    <h5 class="fw-bold text-white">No hay materias registradas</h5>
+                    <p class="text-muted small">No se encontraron datos en la API.</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
